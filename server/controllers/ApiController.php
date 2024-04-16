@@ -19,7 +19,7 @@ class ApiController
             header('Content-type: application/json');
             echo json_encode($visitors);
         } else {
-            echo json_encode(['error' => 'No visitors found']);
+            echo json_encode(['error' => 'No visitor found']);
         }
     }
 
@@ -54,17 +54,22 @@ class ApiController
     public function add_visitor($numVisiteur, $nom, $nbJours, $tarifJournalier)
     {
         $visitorModel = new Visitor($numVisiteur, $nom, $nbJours, $tarifJournalier);
-        $validationResult = $visitorModel->validate();
-        if (empty($validationResult)) {
-            if ($visitor = $visitorModel->save_visitor()) {
-                header('Content-type: application/json');
-                echo json_encode($visitor);
+        if (!$visitorModel->visitor_exists($numVisiteur)) {
+            $validationResult = $visitorModel->validate();
+            if (empty($validationResult)) {
+                if ($visitor = $visitorModel->save_visitor()) {
+                    header('Content-type: application/json');
+                    echo json_encode($visitor);
+                } else {
+                    echo json_encode(['error' => 'Unable to add this visitor']);
+                }
             } else {
-                echo json_encode(['error' => 'Unable to add this visitor']);
+                header('Content-type: application/json');
+                echo json_encode(['error' => $validationResult]);
             }
         } else {
             header('Content-type: application/json');
-            echo json_encode(['error' => $validationResult]);
+            echo json_encode(['error' => 'NumVisiteur already exists']);
         }
     }
 

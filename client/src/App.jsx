@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { getAllVisitors } from './services/api'
 import './App.css'
+import { Tables } from './components/Table'
+import { VisitorChart } from './components/Chart'
 
 function App() {
 
@@ -16,13 +18,14 @@ function App() {
   }
 
   return (
-    <div>
-      <h3>Liste des visiteurs</h3>
-      <ul>
-        {visitors.map(visitor => (
-          <li key={visitor.numVisiteur}>{visitor.nom}</li>
-        ))}
-      </ul>
+    <div className="flex flex-col-reverse lg:flex-row justify-between gap-4 px-3 pt-5">
+      <div className='w-full flex justify-center'>
+        <VisitorChart />
+      </div>
+
+      <div className='w-full flex justify-center mb-5 lg:mb-0'>
+        <Tables visiteurs={visitors} />
+      </div>
     </div>
   )
 }

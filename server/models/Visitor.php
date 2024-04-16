@@ -40,7 +40,7 @@ class Visitor
     /**
      * Get all visitors
      *
-     * @return array/boolean
+     * @return array|bool array of visitors or false
      */
     public function get_all_visitors()
     {
@@ -58,7 +58,7 @@ class Visitor
      * Get a specific visitor
      *
      * @param string $numVisiteur
-     * @return array/boolean
+     * @return array|bool array of visitor or false
      */
     public function get_visitor($numVisiteur)
     {
@@ -77,7 +77,7 @@ class Visitor
     /**
      * Save a visitor to database
      *
-     * @return boolean
+     * @return bool
      */
     public function save_visitor()
     {
@@ -101,7 +101,7 @@ class Visitor
      * Update a specific visitor
      *
      * @param string $numVisiteur
-     * @return boolean
+     * @return bool
      */
     public function update_visitor($numVisiteur)
     {
@@ -125,7 +125,7 @@ class Visitor
      * Delete a specific visitor
      *
      * @param string $numVisiteur
-     * @return boolean
+     * @return bool
      */
     public function delete_visitor($numVisiteur)
     {
