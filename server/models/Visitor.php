@@ -66,8 +66,8 @@ class Visitor
             global $pdo;
 
             $stmt = $pdo->prepare("SELECT * FROM visiteur WHERE numVisiteur=:numVisiteur");
-            $stmt->execute(['numVisiteur' => $numVisiteur]);
-
+            $stmt->bindParam(':numVisiteur', $numVisiteur);
+            $stmt->execute();
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (\Throwable $th) {
             return false;

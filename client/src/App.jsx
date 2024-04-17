@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { getAllVisitors } from './services/api'
-import './App.css'
 import { Tables } from './components/Table'
 import { VisitorChart } from './components/Chart'
+import './App.css'
 
 function App() {
 

@@ -16,6 +16,7 @@ class ApiController
         $visitors = $visitorModel->get_all_visitors();
 
         if ($visitors !== false) {
+            http_response_code(200);
             header('Content-type: application/json');
             echo json_encode($visitors);
         } else {
@@ -35,9 +36,11 @@ class ApiController
         $visitor = $visitorModel->get_visitor($numVisiteur);
 
         if ($visitor !== false) {
+            http_response_code(200);
             header('Content-type: application/json');
             echo json_encode($visitor);
         } else {
+            http_response_code(404);
             echo json_encode(['error' => 'No visitor found']);
         }
     }
@@ -58,8 +61,9 @@ class ApiController
             $validationResult = $visitorModel->validate();
             if (empty($validationResult)) {
                 if ($visitor = $visitorModel->save_visitor()) {
+                    http_response_code(201);
                     header('Content-type: application/json');
-                    echo json_encode($visitor);
+                    echo json_encode(['Success' => 'Visitor added successfully']);
                 } else {
                     echo json_encode(['error' => 'Unable to add this visitor']);
                 }
@@ -68,6 +72,7 @@ class ApiController
                 echo json_encode(['error' => $validationResult]);
             }
         } else {
+            http_response_code(409);
             header('Content-type: application/json');
             echo json_encode(['error' => 'NumVisiteur already exists']);
         }
@@ -90,8 +95,9 @@ class ApiController
             $validationResult = $visitorModel->validate();
             if (empty($validationResult)) {
                 if ($visitor = $visitorModel->update_visitor($numVisiteur)) {
+                    http_response_code(201);
                     header('Content-type: application/json');
-                    echo json_encode($visitor);
+                    echo json_encode(['Success' => 'Visitor updated successfully']);
                 } else {
                     echo json_encode(['error' => 'Unable to update this visitor']);
                 }
@@ -100,6 +106,7 @@ class ApiController
                 echo json_encode(['error' => $validationResult]);
             }
         } else {
+            http_response_code(404);
             header('Content-type: application/json');
             echo json_encode(['error' => 'Visitor doesn\'t exist']);
         }
@@ -119,11 +126,12 @@ class ApiController
 
             if ($visitor !== false) {
                 header('Content-type: application/json');
-                echo json_encode($visitor);
+                echo json_encode(['Success' => 'Visitor deleted successfully']);
             } else {
                 echo json_encode(['error' => 'Unable to delete this visitor']);
             }
         } else {
+            http_response_code(404);
             header('Content-type: application/json');
             echo json_encode(['error' => 'Visitor doesn\'t exist']);
         }
