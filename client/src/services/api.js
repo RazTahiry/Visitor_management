@@ -1,4 +1,5 @@
 import axios from "axios";
+import qs from "qs";
 
 const apiUrl = "http://localhost:8000/api";
 
@@ -42,10 +43,19 @@ export async function addVisitor(formData) {
   }
 }
 
-export async function editVisitor(visitor) {
+export async function editVisitor(visitor, formData) {
   try {
-    const response = await axios.put(`${apiUrl}/visitors/update/${visitor}`);
-    return response.data;
+    axios
+      .put(`${apiUrl}/visitors/update/${visitor}`, {
+        numVisiteur: formData.numVisiteur,
+        nom: formData.nom,
+        nbJours: formData.nbJours,
+        tarifJournalier: formData.tarifJournalier,
+      })
+      .then((response) => {
+        console.log(response.status, response.data);
+        return response.data;
+      });
   } catch (error) {
     console.log("Error: ", error);
     throw error;

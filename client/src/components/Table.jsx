@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { ModalDelete } from "./ModalDelete";
 import { ModalForm } from "./ModalForm";
 
-export function Tables({ visiteurs, onDelete }) {
+export function Tables({ visiteurs, onDelete, onUpdate }) {
   return (
     <div className="overflow-x-auto w-full">
       <Table hoverable className="bg-transparent">
@@ -49,6 +49,9 @@ export function Tables({ visiteurs, onDelete }) {
                     classes="font-medium text-cyan-600 hover:underline dark:text-cyan-500 me-2"
                     buttonValue={<i className="uil uil-pen text-xl"></i>}
                     method="PUT"
+                    numVisiteur={visitor.numVisiteur}
+                    visitorInfo={visitor}
+                    onUpdate={onUpdate}
                   />
 
                   <ModalDelete
@@ -72,4 +75,5 @@ export function Tables({ visiteurs, onDelete }) {
 Tables.propTypes = {
   visiteurs: PropTypes.array.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func.isRequired,
 };
