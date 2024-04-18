@@ -1,7 +1,6 @@
 <?php
 
 include_once __DIR__ . '/../models/Visitor.php';
-header('Access-Control-Allow-Origin: http://localhost:5173');
 
 class ApiController
 {
@@ -65,6 +64,7 @@ class ApiController
                     header('Content-type: application/json');
                     echo json_encode(['Success' => 'Visitor added successfully']);
                 } else {
+                    http_response_code(400);
                     echo json_encode(['error' => 'Unable to add this visitor']);
                 }
             } else {
@@ -99,6 +99,7 @@ class ApiController
                     header('Content-type: application/json');
                     echo json_encode(['Success' => 'Visitor updated successfully']);
                 } else {
+                    http_response_code(400);
                     echo json_encode(['error' => 'Unable to update this visitor']);
                 }
             } else {

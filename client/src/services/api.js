@@ -1,49 +1,65 @@
-import axios from 'axios'
+import axios from "axios";
 
-const apiUrl = 'http://localhost:8000/api'
+const apiUrl = "http://localhost:8000/api";
 
 export async function getAllVisitors() {
-    try {
-        const response = await axios.get(`${apiUrl}/visitors`)
-        if (response.status === 200) {
-            return response.data
-        }
-    } catch (error) {
-        console.log('Error: ', error)
-        throw error
+  try {
+    const response = await axios.get(`${apiUrl}/visitors`);
+    if (response.status === 200) {
+      return response.data;
     }
+  } catch (error) {
+    console.log("Error: ", error);
+    throw error;
+  }
 }
-
 
 export async function getVisitor(visitor) {
-    try {
-        const response = await axios.get(`${apiUrl}/visitors/${visitor}`)
-        return response.data;
-    } catch (error) {
-        console.log('Error: ', error)
-        throw error
-    }
+  try {
+    const response = await axios.get(`${apiUrl}/visitors/${visitor}`);
+    return response.data;
+  } catch (error) {
+    console.log("Error: ", error);
+    throw error;
+  }
 }
 
+export async function addVisitor(formData) {
+  try {
+    axios
+      .post(`${apiUrl}/visitors/save`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        console.log(response.status, response.data);
+        return response.data;
+      });
+  } catch (error) {
+    console.log("Error: ", error);
+    throw error;
+  }
+}
 
 export async function editVisitor(visitor) {
-    try {
-        const response = await axios.put(`${apiUrl}/visitors/update/${visitor}`)
-        return response.data;
-    } catch (error) {
-        console.log('Error: ', error)
-        throw error
-    }
+  try {
+    const response = await axios.put(`${apiUrl}/visitors/update/${visitor}`);
+    return response.data;
+  } catch (error) {
+    console.log("Error: ", error);
+    throw error;
+  }
 }
-
 
 export async function deleteVisitor(visitor) {
-    try {
-        const response = await axios.delete(`${apiUrl}/visitors/delete/${visitor}`)
-        return response.data;
-    } catch (error) {
-        console.log('Error: ', error)
-        throw error
-    }
+  try {
+    axios.delete(`${apiUrl}/visitors/delete/${visitor}`).then((response) => {
+      console.log(response.status, response.data);
+      return response.data;
+    });
+  } catch (error) {
+    console.log("Error: ", error);
+    throw error;
+  }
 }
-
