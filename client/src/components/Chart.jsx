@@ -1,24 +1,35 @@
 import React from "react";
 import Chart from "chart.js/auto";
-import { Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
+import PropTypes from "prop-types";
 
-export function VisitorChart() {
-    const labels = ["January", "February", "March", "April", "May", "June"];
-    const data = {
-        labels: labels,
-        datasets: [
-            {
-                label: "My First dataset",
-                backgroundColor: "rgb(255, 99, 132)",
-                borderColor: "rgb(255, 99, 132)",
-                data: [0, 10, 5, 2, 20, 30, 45],
-            },
+export function VisitorChart({ min, max, total }) {
+  const labels = ["Tarif minimum", "Tarif maximum", "Tarif total"];
+  const data = {
+    labels: labels,
+    datasets: [
+      {
+        label: "Tarif",
+        backgroundColor: [
+          "rgb(100, 100, 255)",
+          "rgb(255, 200, 200)",
+          "rgb(100, 255, 100)",
         ],
-    };
+        borderColor: "rgb(255, 255, 255)",
+        data: [min, max, total],
+      },
+    ],
+  };
 
-    return (
-        <>
-            <Line data={data} />
-        </>
-    )
+  return (
+    <>
+      <Bar data={data} />
+    </>
+  );
 }
+
+VisitorChart.propTypes = {
+  min: PropTypes.number.isRequired,
+  max: PropTypes.number.isRequired,
+  total: PropTypes.number.isRequired,
+};

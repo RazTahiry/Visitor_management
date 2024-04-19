@@ -1,5 +1,4 @@
 import axios from "axios";
-import qs from "qs";
 
 const apiUrl = "http://localhost:8000/api";
 

@@ -2,8 +2,44 @@ import { Table } from "flowbite-react";
 import PropTypes from "prop-types";
 import { ModalDelete } from "./ModalDelete";
 import { ModalForm } from "./ModalForm";
+import { useEffect, useState } from "react";
+import { MinMaxTotal } from "./MinMaxTotal";
 
-export function Tables({ visiteurs, onDelete, onUpdate }) {
+export function Tables({
+  visiteurs,
+  onDelete,
+  onUpdate,
+  minTarif,
+  maxTarif,
+  totalTarif,
+}) {
+  const [sum, setSum] = useState(0);
+  const [min, setMin] = useState(Number.MAX_VALUE);
+  const [max, setMax] = useState(0);
+
+  useEffect(() => {
+    let total = 0;
+    let newMin = Number.MAX_VALUE;
+    let newMax = 0;
+
+    visiteurs.forEach((visitor) => {
+      const tarif = visitor.nbJours * visitor.tarifJournalier;
+      total += tarif;
+      newMin = Math.min(newMin, tarif);
+      newMax = Math.max(newMax, tarif);
+    });
+
+    if (newMin !== Number.MAX_VALUE && newMax !== 0 && total !== 0) {
+      setSum(total);
+      setMin(newMin);
+      setMax(newMax);
+
+      totalTarif(total);
+      minTarif(newMin);
+      maxTarif(newMax);
+    }
+  }, [visiteurs]);
+
   return (
     <div className="overflow-x-auto w-full">
       <Table hoverable className="bg-transparent">
@@ -68,6 +104,13 @@ export function Tables({ visiteurs, onDelete, onUpdate }) {
           )}
         </Table.Body>
       </Table>
+      {visiteurs.length !== 0 && (
+        <MinMaxTotal
+          min={min.toLocaleString()}
+          max={max.toLocaleString()}
+          total={sum.toLocaleString()}
+        />
+      )}
     </div>
   );
 }
@@ -76,4 +119,7 @@ Tables.propTypes = {
   visiteurs: PropTypes.array.isRequired,
   onDelete: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
+  minTarif: PropTypes.func.isRequired,
+  maxTarif: PropTypes.func.isRequired,
+  totalTarif: PropTypes.func.isRequired,
 };

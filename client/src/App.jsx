@@ -12,6 +12,9 @@ import { ModalForm } from "./components/ModalForm";
 
 function App() {
   const [visitors, setVisitors] = useState([]);
+  const [sum, setSum] = useState(0);
+  const [min, setMin] = useState(0);
+  const [max, setMax] = useState(0);
   // const [visitor, setVisitor] = useState({});
   // const fetchVisitor = async (numVisiteur) => {
   //   const visitorData = await getVisitor(numVisiteur);
@@ -74,7 +77,7 @@ function App() {
 
       <div className="flex flex-col-reverse lg:flex-row justify-between gap-4 px-3 pt-5">
         <div className="w-full flex justify-center">
-          <VisitorChart />
+          <VisitorChart min={min} max={max} total={sum} />
         </div>
 
         <div className="w-full flex justify-center mb-5 lg:mb-0">
@@ -82,6 +85,9 @@ function App() {
             visiteurs={visitors}
             onDelete={handleDelete}
             onUpdate={handleUpdate}
+            minTarif={setMin}
+            maxTarif={setMax}
+            totalTarif={setSum}
           />
         </div>
       </div>
