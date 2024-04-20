@@ -1,4 +1,4 @@
-import { Button, Modal } from "flowbite-react";
+import { Button, Modal, Tooltip } from "flowbite-react";
 import { useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import PropTypes from "prop-types";
@@ -18,7 +18,15 @@ export function ModalDelete({ numVisiteur, onDelete }) {
         className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
         type="button"
       >
-        <i className="uil uil-trash-alt text-xl"></i>
+        <Tooltip
+          content="Supprimer"
+          animation="duration-500"
+          className="bg-secondary"
+          placement="left"
+          arrow={false}
+        >
+          <i className="uil uil-trash-alt text-xl"></i>
+        </Tooltip>
       </button>
       <Modal
         show={openModal}
@@ -31,14 +39,14 @@ export function ModalDelete({ numVisiteur, onDelete }) {
           <div className="text-center">
             <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
             <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-              Are you sure you want to delete this visitor?
+              Êtes-vous sûr de vouloir supprimer ce visiteur?
             </h3>
             <div className="flex justify-center gap-4">
               <Button color="failure" onClick={handleSubmit}>
-                {"Yes, I'm sure"}
+                {"Oui, je suis sûr"}
               </Button>
               <Button color="gray" onClick={() => setOpenModal(false)}>
-                No, cancel
+                Non, annuler
               </Button>
             </div>
           </div>

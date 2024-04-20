@@ -36,6 +36,7 @@ switch ($request_method) {
 
                 $apiController->add_visitor($numVisiteur, $nom, $nbJours, $tarifJournalier);
             } else {
+                http_response_code(400);
                 echo json_encode(['error' => '$_POST not set']);
             }
         } else {
@@ -65,6 +66,7 @@ switch ($request_method) {
                     echo json_encode(['error' => 'URI Id and $_PUT[\'numVisiteur\'] are different']);
                 }
             } else {
+                http_response_code(400);
                 echo json_encode(['error' => '$_PUT not set']);
             }
         } elseif ($request_uri === '/api/visitors/update' || $request_uri === '/api/visitors/update/') {

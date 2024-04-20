@@ -1,4 +1,4 @@
-import { Modal } from "flowbite-react";
+import { Modal, Tooltip } from "flowbite-react";
 import { useState } from "react";
 import PropTypes from "prop-types";
 
@@ -10,6 +10,7 @@ export function ModalForm({
   onUpdate,
   numVisiteur,
   visitorInfo,
+  lastNumVisitor,
 }) {
   const [openModal, setOpenModal] = useState(false);
   const [visitor, setVisitor] = useState({});
@@ -47,11 +48,52 @@ export function ModalForm({
     setOpenModal(false);
   }
 
+  function getNextNumVisitor(NumVisitor) {
+    if (!NumVisitor) {
+      return "C001";
+    }
+
+    if (NumVisitor !== "") {
+      // Using regex for separate the character and the number
+      let matches = NumVisitor.match(/(\D+)(\d+)/);
+      if (!matches || matches.length < 2) {
+        return "";
+      }
+      // Parse the alphabetic and the numeric side
+      let prefix = matches[1]; // Alphabetic side
+      let number = parseInt(matches[2]); // Numeric side converted in integer
+      number++;
+
+      // Format the next number visitor
+      let NextNumVisitor =
+        prefix + number.toString().padStart(matches[2].length, "0");
+
+      return NextNumVisitor;
+    } else {
+      return "C001";
+    }
+  }
+
   return (
     <>
-      <button onClick={handleButtonClick} className={classes} type="button">
-        {buttonValue}
-      </button>
+      {method === "PUT" ? (
+        <button onClick={handleButtonClick} className={classes} type="button">
+          <Tooltip
+            content="Modifier"
+            animation="duration-500"
+            className="bg-secondary"
+            placement="left"
+            arrow={false}
+          >
+            {buttonValue}
+          </Tooltip>
+        </button>
+      ) : (
+        <button onClick={handleButtonClick} className={classes} type="button">
+          {buttonValue}
+        </button>
+      )}
+
       <Modal show={openModal} size="md" onClose={onCloseModal} popup>
         <Modal.Header />
         <Modal.Body>
@@ -69,8 +111,13 @@ export function ModalForm({
                   name="numVisiteur"
                   id="numVisiteur"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-secondary focus:border-secondary block w-full p-2.5"
-                  defaultValue={numVisiteur}
+                  value={
+                    method === "POST"
+                      ? getNextNumVisitor(lastNumVisitor)
+                      : numVisiteur
+                  }
                   required
+                  readOnly
                 />
               </div>
               <div className="col-span-2">
@@ -96,7 +143,7 @@ export function ModalForm({
                   htmlFor="nbJours"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Nombre de jour
+                  Nombre de jours
                 </label>
                 <input
                   type="number"
@@ -128,7 +175,7 @@ export function ModalForm({
               type="submit"
               className="transition text-white inline-flex items-center bg-secondary hover:bg-primary focus:outline-none focus:ring-blue-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             >
-              {method === "POST" && (
+              {method === "POST" ? (
                 <svg
                   className="me-1 -ms-1 w-5 h-5"
                   fill="currentColor"
@@ -141,6 +188,8 @@ export function ModalForm({
                     clipRule="evenodd"
                   ></path>
                 </svg>
+              ) : (
+                <i className="uil uil-edit me-2 -ms-1 text-lg"></i>
               )}
               {method === "POST" ? "Ajouter" : "Modifier"}
             </button>
@@ -159,4 +208,5 @@ ModalForm.propTypes = {
   onSubmit: PropTypes.func,
   onUpdate: PropTypes.func,
   visitorInfo: PropTypes.object,
+  lastNumVisitor: PropTypes.string,
 };

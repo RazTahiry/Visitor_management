@@ -9,12 +9,14 @@ import { Tables } from "./components/Table";
 import { VisitorChart } from "./components/Chart";
 import "./App.css";
 import { ModalForm } from "./components/ModalForm";
+import { VisitorNavbar } from "./components/Navbar";
 
 function App() {
   const [visitors, setVisitors] = useState([]);
   const [sum, setSum] = useState(0);
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(0);
+  const [lastNumVisitor, setlastNumVisitor] = useState("");
   // const [visitor, setVisitor] = useState({});
   // const fetchVisitor = async (numVisiteur) => {
   //   const visitorData = await getVisitor(numVisiteur);
@@ -28,10 +30,16 @@ function App() {
   const fetchVisitors = async () => {
     const visitorsData = await getAllVisitors();
     setVisitors(visitorsData);
+    if (visitorsData.length === 0) {
+      setlastNumVisitor("");
+    } else {
+      setlastNumVisitor(visitorsData[visitorsData.length - 1].numVisiteur);
+    }
   };
 
   const handleSubmit = async (formData) => {
     try {
+      console.log(formData);
       await addVisitor(formData);
       fetchVisitors();
     } catch (error) {
@@ -68,11 +76,14 @@ function App() {
 
   return (
     <>
+      <VisitorNavbar />
+
       <ModalForm
-        classes="py-2.5 px-5 me-2 mb-2 text-sm font-medium focus:outline-none rounded-lg border focus:z-10 focus:ring-gray-700 bg-gray-800 text-gray-400 border-gray-600 hover:text-white hover:bg-gray-700"
-        buttonValue="Add a visitor"
+        classes="mt-5 transition py-2.5 px-5 text-sm font-medium focus:outline-none rounded-lg focus:z-10 focus:ring-gray-700 bg-secondary text-white hover:text-white hover:bg-primary hover:shadow-lg"
+        buttonValue="Ajouter un visiteur"
         method="POST"
         onSubmit={handleSubmit}
+        lastNumVisitor={lastNumVisitor}
       />
 
       <div className="flex flex-col-reverse lg:flex-row justify-between gap-4 px-3 pt-5">
