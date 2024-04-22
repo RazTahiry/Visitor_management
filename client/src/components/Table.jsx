@@ -41,7 +41,7 @@ export function Tables({
   }, [visiteurs]);
 
   return (
-    <div>
+    <div className="w-full">
       <div className="overflow-x-auto w-full p-2">
         <Table hoverable className="bg-none shadow-sm">
           <Table.Head>
@@ -96,7 +96,7 @@ export function Tables({
               ))
             ) : (
               <Table.Row className="text-center bg-white p-2">
-                <Table.Cell colSpan="5">Empty.</Table.Cell>
+                <Table.Cell colSpan="5">Aucun visiteur.</Table.Cell>
               </Table.Row>
             )}
           </Table.Body>

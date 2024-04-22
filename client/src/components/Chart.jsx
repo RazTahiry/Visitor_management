@@ -10,7 +10,7 @@ export function VisitorChart({ min, max, total }) {
     datasets: [
       {
         label: "Tarif",
-        backgroundColor: "rgb(200, 200, 255)",
+        backgroundColor: "#526D82",
         borderColor: "rgb(255, 255, 255)",
         data: [min, max, total],
       },
@@ -19,7 +19,7 @@ export function VisitorChart({ min, max, total }) {
 
   return (
     <>
-      <Bar data={data} className="p-4" style={{ fontFamily: "Poppins" }} />
+      <Bar data={data} className="p-2" style={{ fontFamily: "Poppins" }} />
     </>
   );
 }

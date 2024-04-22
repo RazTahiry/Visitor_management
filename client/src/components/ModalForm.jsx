@@ -50,7 +50,7 @@ export function ModalForm({
 
   function getNextNumVisitor(NumVisitor) {
     if (!NumVisitor) {
-      return "C001";
+      return "V0001";
     }
 
     if (NumVisitor !== "") {
@@ -70,7 +70,7 @@ export function ModalForm({
 
       return NextNumVisitor;
     } else {
-      return "C001";
+      return "V0001";
     }
   }
 

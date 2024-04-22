@@ -6,6 +6,7 @@ export async function getAllVisitors() {
   try {
     const response = await axios.get(`${apiUrl}/visitors`);
     if (response.status === 200) {
+      // ToastSuccess();
       return response.data;
     }
   } catch (error) {
@@ -26,16 +27,12 @@ export async function getVisitor(visitor) {
 
 export async function addVisitor(formData) {
   try {
-    axios
-      .post(`${apiUrl}/visitors/save`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((response) => {
-        console.log(response.status, response.data);
-        return response.data;
-      });
+    const response = await axios.post(`${apiUrl}/visitors/save`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return { status: response.status, data: response.data };
   } catch (error) {
     console.log("Error: ", error);
     throw error;
