@@ -18,6 +18,7 @@ export async function getAllVisitors() {
 export async function getVisitor(visitor) {
   try {
     const response = await axios.get(`${apiUrl}/visitors/${visitor}`);
+    console.log(response.status, response.data);
     return response.data;
   } catch (error) {
     console.log("Error: ", error);
@@ -27,12 +28,13 @@ export async function getVisitor(visitor) {
 
 export async function addVisitor(formData) {
   try {
-    const response = await axios.post(`${apiUrl}/visitors/save`, formData, {
+    const response = await axios.post(`${apiUrl}/visitors/create`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
-    return { status: response.status, data: response.data };
+    console.log(response.status, response.data);
+    return response.data;
   } catch (error) {
     console.log("Error: ", error);
     throw error;
@@ -42,7 +44,7 @@ export async function addVisitor(formData) {
 export async function editVisitor(visitor, formData) {
   try {
     axios
-      .put(`${apiUrl}/visitors/update/${visitor}`, {
+      .put(`${apiUrl}/visitors/${visitor}/update`, {
         numVisiteur: formData.numVisiteur,
         nom: formData.nom,
         nbJours: formData.nbJours,
@@ -60,7 +62,7 @@ export async function editVisitor(visitor, formData) {
 
 export async function deleteVisitor(visitor) {
   try {
-    axios.delete(`${apiUrl}/visitors/delete/${visitor}`).then((response) => {
+    axios.delete(`${apiUrl}/visitors/${visitor}/delete`).then((response) => {
       console.log(response.status, response.data);
       return response.data;
     });
